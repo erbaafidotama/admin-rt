@@ -46,14 +46,15 @@ func GetDB() *gorm.DB {
 	dbUsername := os.Getenv("DB_USERNAME")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbPort := os.Getenv("DB_PORT")
-	fmt.Println(dbName)
+
 	dsn := "user=" + dbUsername + " password=" + dbPassword + " dbname=" + dbName + " port=" + dbPort + " sslmode=disable TimeZone=Asia/Shanghai"
-	fmt.Println(dsn)
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	fmt.Printf("\n\n%#v\n\n", db)
 	if err != nil {
 		panic("Connecting database failed:" + err.Error())
 	}
-	db.AutoMigrate(&models.Account{})
+
+	db.AutoMigrate(&models.Account{}, &models.IuranSampah{})
 	return db
 }

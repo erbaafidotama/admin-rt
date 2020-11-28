@@ -3,7 +3,6 @@ package routes
 import (
 	"admin-rt/config"
 	"admin-rt/models"
-	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -46,7 +45,6 @@ func PostAccount(c *gin.Context) {
 		roleAdmin = true
 	}
 
-	fmt.Println("create account")
 	// make object from form body
 	account := models.Account{
 		Username:  c.PostForm("username"),
@@ -67,6 +65,7 @@ func PostAccount(c *gin.Context) {
 	})
 }
 
+// UpdateAccount route
 func UpdateAccount(c *gin.Context) {
 	db := config.GetDB()
 	var roleAdmin bool
@@ -105,6 +104,7 @@ func UpdateAccount(c *gin.Context) {
 	})
 }
 
+// DeleteAccount Route
 func DeleteAccount(c *gin.Context) {
 	db := config.GetDB()
 	// get id from url
