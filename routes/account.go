@@ -66,3 +66,64 @@ func PostAccount(c *gin.Context) {
 		"data":   account,
 	})
 }
+
+func UpdateAccount(c *gin.Context) {
+	db := config.GetDB()
+	var roleAdmin bool
+
+	// get id from url
+	accountID := c.Param("id")
+
+	var dataAccount models.Account
+	if err := db.Where("id = ?", accountID).First(&dataAccount).Error; err != nil {
+		c.JSON(404, gin.H{
+			"status":  "error",
+			"message": "record not found",
+		})
+		c.Abort()
+		return
+	}
+
+	// convert string date to date db
+	dateStr := c.PostForm("date_birth")
+	format := "2006-01-02"
+	date, _ := time.Parse(format, dateStr)
+
+	if c.PostForm("admin_role") == "true" {
+		roleAdmin = true
+	}
+
+	db.Model(&dataAccount).Where("id = ?", accountID).Updates(models.Account{
+		FullName:  c.PostForm("full_name"),
+		DateBirth: date,
+		AdminRole: roleAdmin,
+	})
+
+	c.JSON(200, gin.H{
+		"status": "Success",
+		"data":   dataAccount,
+	})
+}
+
+func DeleteAccount(c *gin.Context) {
+	db := config.GetDB()
+	// get id from url
+	accountID := c.Param("id")
+
+	var dataAccount models.Account
+	if err := db.Where("id = ?", accountID).First(&dataAccount).Error; err != nil {
+		c.JSON(404, gin.H{
+			"status":  "error",
+			"message": "record not found",
+		})
+		c.Abort()
+		return
+	}
+
+	db.Where("id = ?", accountID).Delete(&dataAccount)
+
+	c.JSON(200, gin.H{
+		"status": "Success Delete",
+		"data":   dataAccount,
+	})
+}

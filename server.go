@@ -2,6 +2,7 @@ package main
 
 import (
 	"admin-rt/config"
+	"admin-rt/middleware"
 	"admin-rt/routes"
 
 	"github.com/gin-gonic/gin"
@@ -20,8 +21,10 @@ func main() {
 		v1.POST("/login", routes.Login) // /api/v1/login
 		adminrt := v1.Group("/admin")   // /api/v1/sewaAset
 		{
-			adminrt.GET("/account", routes.GetAccount)   // /api/v1/admin/account
-			adminrt.POST("/account", routes.PostAccount) // /api/v1/admin/account
+			adminrt.GET("/account", middleware.IsAuth(), routes.GetAccount) // /api/v1/admin/account
+			adminrt.POST("/account", routes.PostAccount)                    // /api/v1/admin/account
+			adminrt.PUT("/account/:id", middleware.IsAuth(), routes.UpdateAccount)
+			adminrt.DELETE("/account/:id", middleware.IsAuth(), routes.DeleteAccount)
 		}
 	}
 
