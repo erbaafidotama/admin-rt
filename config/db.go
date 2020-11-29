@@ -40,6 +40,7 @@ import (
 // 	// DB.AutoMigrate(&models.TransactionItem{})
 // }
 
+// GetDB config
 func GetDB() *gorm.DB {
 	godotenv.Load()
 	dbName := os.Getenv("DB_NAME")
@@ -55,6 +56,6 @@ func GetDB() *gorm.DB {
 		panic("Connecting database failed:" + err.Error())
 	}
 
-	db.AutoMigrate(&models.Account{}, &models.IuranSampah{})
+	db.AutoMigrate(&models.Account{}, &models.IuranSampah{}, &models.Citizen{})
 	return db
 }

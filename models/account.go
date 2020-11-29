@@ -16,4 +16,5 @@ type Account struct {
 	DateBirth    time.Time `json:"date_birth"`
 	AdminRole    bool      `gorm:"default:0"`
 	IuranSampahs []IuranSampah
+	Citizens     []Citizen
 }

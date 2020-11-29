@@ -9,10 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var db = config.GetDB()
-
 // PostIuranSampah Route
 func PostIuranSampah(c *gin.Context) {
+	db := config.GetDB()
+
 	dateStr := c.PostForm("pay_date")
 	format := "2006-01-02"
 	date, _ := time.Parse(format, dateStr)

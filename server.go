@@ -27,6 +27,8 @@ func main() {
 			adminrt.DELETE("/account/:id", middleware.IsAuth(), routes.DeleteAccount)
 
 			adminrt.POST("/iuranSampah", middleware.IsAuth(), routes.PostIuranSampah) // /api/v1/admin/iuranSampah
+
+			adminrt.POST("/citizen", middleware.IsAuth(), routes.PostCitizen) // /api/v1/admin/citizen
 		}
 	}
 
