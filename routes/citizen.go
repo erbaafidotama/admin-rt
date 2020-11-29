@@ -35,3 +35,26 @@ func PostCitizen(c *gin.Context) {
 		"data":   citizen,
 	})
 }
+
+// GetCitizen Route
+func GetCitizen(c *gin.Context) {
+	db := config.GetDB()
+	citizens := []models.Citizen{}
+
+	// select * from User
+	if err := db.Find(&citizens).Error; err != nil {
+		// return error
+		c.JSON(404, gin.H{
+			"status":  "error",
+			"message": "record not found",
+		})
+		c.Abort()
+		return
+	}
+
+	// return complete
+	c.JSON(200, gin.H{
+		"message": "GET data Citizen",
+		"data":    citizens,
+	})
+}

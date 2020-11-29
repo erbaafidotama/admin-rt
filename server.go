@@ -29,6 +29,7 @@ func main() {
 			adminrt.POST("/iuranSampah", middleware.IsAuth(), routes.PostIuranSampah) // /api/v1/admin/iuranSampah
 
 			adminrt.POST("/citizen", middleware.IsAuth(), routes.PostCitizen) // /api/v1/admin/citizen
+			adminrt.GET("/citizen", middleware.IsAuth(), routes.GetCitizen)   // /api/v1/admin/citizen
 		}
 	}
 
